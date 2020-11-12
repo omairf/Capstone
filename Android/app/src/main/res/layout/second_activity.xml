@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/ipAddressDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="IP"/>
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Status of Connection" />
+
+    <Button
+        android:id="@+id/btnON1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickHandler"
+        android:text="LED1 ON" />
+
+    <Button
+        android:id="@+id/btnOFF1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickHandler"
+        android:text="LED1 OFF" />
+
+    <Button
+        android:id="@+id/btnON2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickHandler"
+        android:text="LED2 ON" />
+
+    <Button
+        android:id="@+id/btnOFF2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickHandler"
+        android:text="LED2 OFF" />
+</LinearLayout>
