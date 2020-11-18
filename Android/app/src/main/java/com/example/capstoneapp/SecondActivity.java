@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,38 +32,53 @@ public class SecondActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         ip = b.getString("ipAddresss");
 
+        ipAddress = (TextView) findViewById(R.id.ipAddressDisplay);
         status = (TextView) findViewById(R.id.status);
         ledON = (Button) findViewById(R.id.btnON1);
         ledOFF = (Button) findViewById(R.id.btnOFF1);
         ledON2 = (Button) findViewById(R.id.btnON2);
         ledOFF2 = (Button) findViewById(R.id.btnOFF2);
-        ipAddress = (TextView) findViewById(R.id.ipAddressDisplay);
+
 
         ipAddress.setText(ip);
-    }
 
-    public void onClickHandler(View view) {
-        switch (view.getId()) {
-            case (R.id.btnON1):
-                web = "/5/on";
-                break;
-            case (R.id.btnOFF1):
-                web = "/5/off";
-                break;
-            case (R.id.btnON2):
-                web = "/4/on";
-                break;
-            case (R.id.btnOFF2):
-                web = "/4/off";
-                break;
-        }
-        action a = new action();
-        a.execute();
+        ledON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                web = "/led1on";
+                new action().execute();
+            }
+        });
+
+        ledOFF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                web = "/led1off";
+                new action().execute();
+            }
+        });
+
+        ledON2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                web = "/led2on";
+                new action().execute();
+            }
+        });
+
+        ledOFF2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                web = "/led2off";
+                new action().execute();
+            }
+        });
     }
 
     public class action extends AsyncTask<Void, Void, String> {
         public String doInBackground(Void... voids){
             try {
+                Toast.makeText(SecondActivity.this, "Hello", Toast.LENGTH_LONG).show();
                 URL url = new URL("https://"+ip+web);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 InputStream is = httpURLConnection.getInputStream();
