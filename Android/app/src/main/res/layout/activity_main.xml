@@ -1,30 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-    <TextView
-        android:id="@+id/appName"
+    <EditText
+        android:id="@+id/motionStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Smart Home Security System" />
+        android:ems="10"
+        android:hint="Motion Sensor Status"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.067" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:id="@+id/systemStatus"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ipAddress"
-        android:hint="IP Address"/>
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="System Status"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/motionStatus"
+        app:layout_constraintVertical_bias="0.036" />
+
+    <EditText
+        android:id="@+id/alarmStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Alarm Status"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/systemStatus"
+        app:layout_constraintVertical_bias="0.052" />
 
     <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="match_parent"
+        android:id="@+id/disarmBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
-        android:onClick="onSubmit"/>
+        android:text="DISARM"
+        android:onClick="disarmWriteDB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/armBtn"
+        app:layout_constraintVertical_bias="0.086" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/armBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ARM"
+        android:onClick="armWriteDB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarmStatus"
+        app:layout_constraintVertical_bias="0.101" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
