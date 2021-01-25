@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
     EditText statusOfPIR, statusOfSystem, statusOfAlarm;
     Button arm, disarm;
+    VideoView myVideoView;
+
+    String url = "http://192.168.2.26/stream";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         arm = (Button) findViewById(R.id.armBtn) ;
         disarm = (Button) findViewById(R.id.disarmBtn);
+
+        myVideoView = (VideoView) findViewById(R.id.videoView);
+        myVideoView.setVideoURI(Uri.parse(url));
+        myVideoView.setMediaController(new MediaController(this));
+        myVideoView.requestFocus();
+        myVideoView.start();
 
         statusOfPIR = (EditText) findViewById(R.id.motionStatus);
         statusOfSystem = (EditText) findViewById(R.id.systemStatus);
