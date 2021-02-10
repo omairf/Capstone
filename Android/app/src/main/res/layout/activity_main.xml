@@ -73,14 +73,17 @@
         app:layout_constraintTop_toBottomOf="@+id/alarmStatus"
         app:layout_constraintVertical_bias="0.101" />
 
-    <VideoView
-        android:id="@+id/videoView"
-        android:layout_width="218dp"
-        android:layout_height="207dp"
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="screenRecord"
+        android:text="stream"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/disarmBtn"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.648" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

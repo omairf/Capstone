@@ -25,30 +25,32 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     EditText statusOfPIR, statusOfSystem, statusOfAlarm;
-    Button arm, disarm;
+    Button arm, disarm, streamButton, start, stop;
     VideoView myVideoView;
 
-    String url = "http://192.168.2.26/stream";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         arm = (Button) findViewById(R.id.armBtn) ;
         disarm = (Button) findViewById(R.id.disarmBtn);
+        start = (Button) findViewById(R.id.start);
+        stop = (Button) findViewById(R.id.stop);
 
-        myVideoView = (VideoView) findViewById(R.id.videoView);
-        myVideoView.setVideoURI(Uri.parse(url));
-        myVideoView.setMediaController(new MediaController(this));
-        myVideoView.requestFocus();
-        myVideoView.start();
 
         statusOfPIR = (EditText) findViewById(R.id.motionStatus);
         statusOfSystem = (EditText) findViewById(R.id.systemStatus);
         statusOfAlarm = (EditText) findViewById(R.id.alarmStatus);
         readDB();
     }
+
+    public void screenRecord(View view){
+        startActivity(new Intent(MainActivity.this,screen_record.class));
+    }
+
 
     public void armWriteDB(View view){
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
