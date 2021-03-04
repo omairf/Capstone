@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FirebaseTest">
-        <activity android:name=".screen_record"></activity>
+        <activity android:name=".viewRecording"></activity>
+        <activity android:name=".buzzer_screen_record" />
+        <activity android:name=".viewFootage" />
+        <activity android:name=".screen_record" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

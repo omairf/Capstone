@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         readDB();
     }
 
+    public void footageList(View view){
+        startActivity(new Intent(MainActivity.this,viewFootage.class));
+    }
+
     public void screenRecord(View view){
         startActivity(new Intent(MainActivity.this,screen_record.class));
     }
@@ -116,12 +120,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Data Received: "+value, Toast.LENGTH_LONG).show();
                 statusOfAlarm.setText("Buzzer: "+value);
                 if (value.equals("On")){
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:5555215556"));//change the number
-                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
-                        return;
-                    }
-                    startActivity(callIntent);
+//                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+//                    callIntent.setData(Uri.parse("tel:5555215556"));//change the number
+//                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
+//                        return;
+//                    }
+                    startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
                 }
             }
 

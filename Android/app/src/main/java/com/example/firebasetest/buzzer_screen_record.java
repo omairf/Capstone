@@ -16,7 +16,6 @@ import android.hardware.display.VirtualDisplay;
 import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,8 +27,6 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import android.widget.VideoView;
-
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -38,7 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class screen_record extends AppCompatActivity {
+public class buzzer_screen_record extends AppCompatActivity {
     private static final int REQUEST_CODE = 1000;
     private static final int REQUEST_PERMISSION = 1001;
     private static final SparseIntArray ORIENTATION = new SparseIntArray();
@@ -70,7 +67,7 @@ public class screen_record extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_screen_record);
+        setContentView(R.layout.activity_buzzer_screen_record);
 
         stream = (WebView) findViewById(R.id.stream);
         stream.loadUrl("http://192.168.2.26/stream");
@@ -84,22 +81,23 @@ public class screen_record extends AppCompatActivity {
 
         //mVideoView = findViewById(R.id.videoView);
         mToggleButton = findViewById(R.id.toggleButton);
+
         mRootLayout = findViewById(R.id.rootLayout);
 
         mToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(screen_record.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) +
-                        ContextCompat.checkSelfPermission(screen_record.this, Manifest.permission.RECORD_AUDIO)
+                if (ContextCompat.checkSelfPermission(buzzer_screen_record.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) +
+                        ContextCompat.checkSelfPermission(buzzer_screen_record.this, Manifest.permission.RECORD_AUDIO)
                         != PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(screen_record.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
-                            ActivityCompat.shouldShowRequestPermissionRationale(screen_record.this, Manifest.permission.RECORD_AUDIO)) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(buzzer_screen_record.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                            ActivityCompat.shouldShowRequestPermissionRationale(buzzer_screen_record.this, Manifest.permission.RECORD_AUDIO)) {
                         mToggleButton.setChecked(false);
                         Snackbar.make(mRootLayout, "Permission", Snackbar.LENGTH_INDEFINITE)
                                 .setAction("Enable", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        ActivityCompat.requestPermissions(screen_record.this,
+                                        ActivityCompat.requestPermissions(buzzer_screen_record.this,
                                                 new String[] {
                                                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                         Manifest.permission.RECORD_AUDIO
@@ -108,7 +106,7 @@ public class screen_record extends AppCompatActivity {
                                     }
                                 });
                     } else {
-                        ActivityCompat.requestPermissions(screen_record.this,
+                        ActivityCompat.requestPermissions(buzzer_screen_record.this,
                                 new String[] {
                                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                         Manifest.permission.RECORD_AUDIO
@@ -128,7 +126,7 @@ public class screen_record extends AppCompatActivity {
         if (toggleButton.isChecked()) {
             Toast.makeText(this.getApplicationContext(),"Footage is now being recorded!", Toast.LENGTH_SHORT).show();
             initRecorder();
-            reocrdScreen();
+            recordScreen();
         } else {
             Toast.makeText(this.getApplicationContext(),"Recording has stopped!", Toast.LENGTH_SHORT).show();
             mMediaRecorder.stop();
@@ -142,7 +140,7 @@ public class screen_record extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void reocrdScreen() {
+    private void recordScreen() {
         if (mMediaProjection == null) {
             startActivityForResult(mMediaProjectionManager.createScreenCaptureIntent(), REQUEST_CODE);
             return;
@@ -282,7 +280,7 @@ public class screen_record extends AppCompatActivity {
                             .setAction("Enable", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    ActivityCompat.requestPermissions(screen_record.this,
+                                    ActivityCompat.requestPermissions(buzzer_screen_record.this,
                                             new String[] {
                                                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                                     Manifest.permission.RECORD_AUDIO
