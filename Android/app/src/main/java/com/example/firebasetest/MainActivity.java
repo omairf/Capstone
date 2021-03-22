@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         statusOfPIR = (EditText) findViewById(R.id.motionStatus);
         statusOfSystem = (EditText) findViewById(R.id.systemStatus);
         statusOfAlarm = (EditText) findViewById(R.id.alarmStatus);
+        //startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
+
         readDB();
     }
 
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 //                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
 //                        return;
 //                    }
-                    startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
+                   startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
                 }
             }
 

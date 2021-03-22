@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.SparseIntArray;
+import android.view.KeyEvent;
 import android.view.Surface;
 import android.view.View;
 import android.webkit.WebView;
@@ -29,6 +30,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -70,7 +73,7 @@ public class buzzer_screen_record extends AppCompatActivity {
         setContentView(R.layout.activity_buzzer_screen_record);
 
         stream = (WebView) findViewById(R.id.stream);
-        stream.loadUrl("http://192.168.2.26/stream");
+        stream.loadUrl("http://192.168.2.34/stream");
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -83,6 +86,7 @@ public class buzzer_screen_record extends AppCompatActivity {
         mToggleButton = findViewById(R.id.toggleButton);
 
         mRootLayout = findViewById(R.id.rootLayout);
+        toggleScreenShare();
 
         mToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,8 +116,12 @@ public class buzzer_screen_record extends AppCompatActivity {
                                         Manifest.permission.RECORD_AUDIO
                                 },
                                 REQUEST_PERMISSION);
+
                     }
-                } else {
+                    //toggleScreenShare(v);
+                }
+                //toggleScreenShare(v);
+                else {
                     toggleScreenShare(v);
                 }
             }
@@ -121,21 +129,28 @@ public class buzzer_screen_record extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void toggleScreenShare() {
+        Toast.makeText(this.getApplicationContext(),"Footage is now being recorded!", Toast.LENGTH_SHORT).show();
+        initRecorder();
+        recordScreen();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void toggleScreenShare(View v) {
         ToggleButton toggleButton = (ToggleButton) v;
         if (toggleButton.isChecked()) {
-            Toast.makeText(this.getApplicationContext(),"Footage is now being recorded!", Toast.LENGTH_SHORT).show();
-            initRecorder();
-            recordScreen();
-        } else {
             Toast.makeText(this.getApplicationContext(),"Recording has stopped!", Toast.LENGTH_SHORT).show();
             mMediaRecorder.stop();
             mMediaRecorder.reset();
             stopRecordScreen();
-
-//            mVideoView.setVisibility(View.VISIBLE);
-//            mVideoView.setVideoURI(Uri.parse(mVideoUrl));
-//            mVideoView.start();
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference system = db.child("System");
+            system.setValue("Disarmed");
+            finish();
+        } else {
+            Toast.makeText(this.getApplicationContext(),"Footage is now being recorded!", Toast.LENGTH_SHORT).show();
+            initRecorder();
+            recordScreen();
         }
     }
 
@@ -292,6 +307,16 @@ public class buzzer_screen_record extends AppCompatActivity {
                 return;
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 //    <Button

@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.util.SparseIntArray;
+import android.view.KeyEvent;
 import android.view.Surface;
 import android.view.View;
 import android.webkit.WebView;
@@ -73,7 +74,7 @@ public class screen_record extends AppCompatActivity {
         setContentView(R.layout.activity_screen_record);
 
         stream = (WebView) findViewById(R.id.stream);
-        stream.loadUrl("http://192.168.2.26/stream");
+        stream.loadUrl("http://192.168.2.34/stream");
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -295,16 +296,15 @@ public class screen_record extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
-//    <Button
-//    android:id="@+id/footage"
-//    android:layout_width="408dp"
-//    android:layout_height="47dp"
-//    android:layout_marginStart="4dp"
-//    android:text="View Footage"
-//    android:onClick="footageList"
-//    app:layout_constraintBottom_toBottomOf="parent"
-//    app:layout_constraintStart_toStartOf="parent"
-//    app:layout_constraintTop_toTopOf="parent"
-//    app:layout_constraintVertical_bias="1.0" />
+
 }
