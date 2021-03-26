@@ -121,14 +121,14 @@ public class MainActivity extends AppCompatActivity {
                 String value = snapshot.getValue(String.class);
                 Toast.makeText(MainActivity.this, "Data Received: "+value, Toast.LENGTH_LONG).show();
                 statusOfAlarm.setText("Buzzer: "+value);
-                if (value.equals("On")){
+//                if (value.equals("On")){
 //                    Intent callIntent = new Intent(Intent.ACTION_CALL);
 //                    callIntent.setData(Uri.parse("tel:5555215556"));//change the number
 //                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
 //                        return;
 //                    }
-                   startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
-                }
+//                   startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
+//                }
             }
 
             @Override

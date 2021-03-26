@@ -52,67 +52,67 @@ public class viewRecording extends AppCompatActivity {
         path = Environment.getExternalStorageDirectory().getPath()+"/DCIM/"+pathOfVideo;
         v = (VideoView) findViewById(R.id.replay);
 
-        FaceDetectorOptions highAccuracyOpts =
-                new FaceDetectorOptions.Builder()
-                        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
-                        .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
-                        .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
-                        .build();
-
-        // Real-time contour detection
-        FaceDetectorOptions realTimeOpts =
-                new FaceDetectorOptions.Builder()
-                        //.setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
-                        //.setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
-                        .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
-                        //.enableTracking()
-                        .build();
-        FaceDetector detector = FaceDetection.getClient(realTimeOpts);
-
-
-        SparseArray<Face> faces;
-        MediaMetadataRetriever mMMR = new MediaMetadataRetriever();
-        mMMR.setDataSource(path);
-        String timeMs = mMMR.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION); // video time in ms
-        int totalVideoTime= 1000*Integer.valueOf(timeMs); // total video time, in uS
-        for (int time_us=1;time_us<totalVideoTime;time_us+=deltaT){
-            bitmap = mMMR.getFrameAtTime(time_us, MediaMetadataRetriever.OPTION_CLOSEST_SYNC); // extract a bitmap element from the closest key frame from the specified time_us
-            if (bitmap==null) break;
-            frame = new Frame.Builder().setBitmap(bitmap).build(); // generates a "Frame" object, which can be fed to a face detector
-            //faces = detector.detect(frame); // detect the faces (detector is a FaceDetector)
-            // TODO ... do something with "faces"
-            InputImage image = InputImage.fromBitmap(bitmap, 0);
-            try {
-                savebitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            Task<List<Face>> result =
-                    detector.process(image)
-                            .addOnSuccessListener(
-                                    new OnSuccessListener<List<Face>>() {
-                                        @Override
-                                        public void onSuccess(List<Face> faces) {
-                                            // Task completed successfully
-                                            Log.d("tag1", "Face Detected");
-                                            //Toast.makeText(viewRecording.this, "Face Detected", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                            .addOnFailureListener(
-                                    new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            // Task failed with an exception
-                                            Log.d("tag2", "Face Not Detected");
-
-                                            //Toast.makeText(viewRecording.this, "Face Not Detected", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    });
-
-        }
+//        FaceDetectorOptions highAccuracyOpts =
+//                new FaceDetectorOptions.Builder()
+//                        .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
+//                        .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+//                        .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
+//                        .build();
+//
+//        // Real-time contour detection
+//        FaceDetectorOptions realTimeOpts =
+//                new FaceDetectorOptions.Builder()
+//                        //.setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+//                        //.setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+//                        .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
+//                        //.enableTracking()
+//                        .build();
+//        FaceDetector detector = FaceDetection.getClient(realTimeOpts);
+//
+//
+//        SparseArray<Face> faces;
+//        MediaMetadataRetriever mMMR = new MediaMetadataRetriever();
+//        mMMR.setDataSource(path);
+//        String timeMs = mMMR.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION); // video time in ms
+//        int totalVideoTime= 1000*Integer.valueOf(timeMs); // total video time, in uS
+//        for (int time_us=1;time_us<totalVideoTime;time_us+=deltaT){
+//            bitmap = mMMR.getFrameAtTime(time_us, MediaMetadataRetriever.OPTION_CLOSEST_SYNC); // extract a bitmap element from the closest key frame from the specified time_us
+//            if (bitmap==null) break;
+//            frame = new Frame.Builder().setBitmap(bitmap).build(); // generates a "Frame" object, which can be fed to a face detector
+//            //faces = detector.detect(frame); // detect the faces (detector is a FaceDetector)
+//            // TODO ... do something with "faces"
+//            InputImage image = InputImage.fromBitmap(bitmap, 0);
+//            try {
+//                savebitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//            Task<List<Face>> result =
+//                    detector.process(image)
+//                            .addOnSuccessListener(
+//                                    new OnSuccessListener<List<Face>>() {
+//                                        @Override
+//                                        public void onSuccess(List<Face> faces) {
+//                                            // Task completed successfully
+//                                            Log.d("tag1", "Face Detected");
+//                                            //Toast.makeText(viewRecording.this, "Face Detected", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    })
+//                            .addOnFailureListener(
+//                                    new OnFailureListener() {
+//                                        @Override
+//                                        public void onFailure(@NonNull Exception e) {
+//                                            // Task failed with an exception
+//                                            Log.d("tag2", "Face Not Detected");
+//
+//                                            //Toast.makeText(viewRecording.this, "Face Not Detected", Toast.LENGTH_SHORT).show();
+//
+//                                        }
+//                                    });
+//
+//        }
 
         final MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(v);
