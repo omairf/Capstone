@@ -1,19 +1,16 @@
-# IoT Smart Home Security System
+# IoT Smart Home Security System (Capstone Project)
 
-one sentence on what it does
+Provide homeowners with a smart home security system that integrates Alexa voice assistant
 
 ## Group Members
 
-here
+Preet Khasakia (pkhasakia)
+Sunil Tumkur (sunilt4)
+Vraj Shah (biv147)
+Omair Farooqui (omairf)
 
 ## Description
 
 description
 ...
 ...
-
-## Functions
-
-- The first service is  
-- The second service is 
-- The third service is 
