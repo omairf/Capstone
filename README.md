@@ -1,6 +1,6 @@
 # IoT Smart Home Security System (Capstone Project)
 
-Provide homeowners with a smart home security system that integrates Alexa voice assistant
+Provide homeowners with a smart home security system to secure their homes from home intruders.
 
 ## Group Members
 
