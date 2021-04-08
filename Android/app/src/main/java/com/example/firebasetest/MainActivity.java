@@ -13,7 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,21 +25,38 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     EditText statusOfPIR, statusOfSystem, statusOfAlarm;
-    Button arm, disarm;
+    Button arm, disarm, streamButton, start, stop;
+    VideoView myVideoView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         arm = (Button) findViewById(R.id.armBtn) ;
         disarm = (Button) findViewById(R.id.disarmBtn);
+        start = (Button) findViewById(R.id.start);
+        stop = (Button) findViewById(R.id.stop);
+
 
         statusOfPIR = (EditText) findViewById(R.id.motionStatus);
         statusOfSystem = (EditText) findViewById(R.id.systemStatus);
         statusOfAlarm = (EditText) findViewById(R.id.alarmStatus);
+        //startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
+
         readDB();
     }
+
+    public void footageList(View view){
+        startActivity(new Intent(MainActivity.this,viewFootage.class));
+    }
+
+    public void screenRecord(View view){
+        startActivity(new Intent(MainActivity.this,screen_record.class));
+    }
+
 
     public void armWriteDB(View view){
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -102,14 +121,14 @@ public class MainActivity extends AppCompatActivity {
                 String value = snapshot.getValue(String.class);
                 Toast.makeText(MainActivity.this, "Data Received: "+value, Toast.LENGTH_LONG).show();
                 statusOfAlarm.setText("Buzzer: "+value);
-                if (value.equals("On")){
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:5555215556"));//change the number
-                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
-                        return;
-                    }
-                    startActivity(callIntent);
-                }
+//                if (value.equals("On")){
+//                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+//                    callIntent.setData(Uri.parse("tel:5555215556"));//change the number
+//                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
+//                        return;
+//                    }
+//                   startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
+//                }
             }
 
             @Override
