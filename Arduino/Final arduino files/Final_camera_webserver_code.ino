@@ -1,20 +1,3 @@
-
-// ArduCAM Mini demo (C)2017 Lee
-// Web: http://www.ArduCAM.com
-// This program is a demo of how to use most of the functions
-// of the library with ArduCAM ESP8266 2MP/5MP camera.
-// This demo was made for ArduCAM ESP8266 2MP/5MP Camera.
-// It can take photo and send to the Web.
-// It can take photo continuously as video streaming and send to the Web.
-// The demo sketch will do the following tasks:
-// 1. Set the camera to JPEG output mode.
-// 2. if server.on("/capture", HTTP_GET, serverCapture),it can take photo and send to the Web.
-// 3.if server.on("/stream", HTTP_GET, serverStream),it can take photo continuously as video
-//streaming and send to the Web.
-
-// This program requires the ArduCAM V4.0.0 (or later) library and ArduCAM ESP8266 2MP/5MP camera
-// and use Arduino IDE 1.6.8 compiler or above
-
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
@@ -31,7 +14,6 @@
 #error Please select the ArduCAM ESP8266 UNO board in the Tools/Board
 #endif
 
-//This demo can only work on OV2640_MINI_2MP or ARDUCAM_SHIELD_V2 platform.
 #if !(defined (OV2640_MINI_2MP)||defined (OV5640_MINI_5MP_PLUS) || defined (OV5642_MINI_5MP_PLUS) \
     || defined (OV5642_MINI_5MP) || defined (OV5642_MINI_5MP_BIT_ROTATION_FIXED) \
     ||(defined (ARDUCAM_SHIELD_V2) && (defined (OV2640_CAM) || defined (OV5640_CAM) || defined (OV5642_CAM))))
@@ -40,21 +22,15 @@
 // set GPIO16 as the slave select :
 const int CS = 16;
 
-
-
-//you can change the value of wifiType to select Station or AP mode.
-//Default is AP mode.
 int wifiType = 0; // 0:Station  1:AP
 
-//AP mode configuration
-//Default is arducam_esp8266.If you want,you can change the AP_aaid  to your favorite name
 const char *AP_ssid = "arducam_esp8266";
-//Default is no password.If you want to set password,put your password here
+//no pass is default
 const char *AP_password = "";
 
-//Station mode you should put your ssid and password
-const char *ssid = "BELL782"; // Put your SSID here
-const char *password = "9392112F"; // Put your PASSWORD here
+//enter your ssid and pass
+const char *ssid = ""; // Put your SSID here
+const char *password = ""; // Put your PASSWORD here
 
 static const size_t bufferSize = 4096;
 static uint8_t buffer[bufferSize] = {0xFF};
@@ -64,8 +40,6 @@ bool is_header = false;
 int cntloggedinclient=0;
 
 ESP8266WebServer server(80);
-//WiFiClient client;
-
 
 #if defined (OV2640_MINI_2MP) || defined (OV2640_CAM)
 ArduCAM myCAM(OV2640, CS);
@@ -75,71 +49,13 @@ ArduCAM myCAM(OV5640, CS);
 ArduCAM myCAM(OV5642, CS);
 #endif
 
-
 void start_capture() {
   myCAM.clear_fifo_flag();
   myCAM.start_capture();
 }
 
 void camCapture(ArduCAM myCAM) {
-  WiFiClient client = server.client();
-
-  uint32_t len  = myCAM.read_fifo_length();
-  if (len >= MAX_FIFO_SIZE) //8M
-  {
-    Serial.println(F("Over size."));
-  }
-  if (len == 0 ) //0 kb
-  {
-    Serial.println(F("Size is 0."));
-  }
-  myCAM.CS_LOW();
-  myCAM.set_fifo_burst();
-  if (!client.connected()) return;
-  String response = "HTTP/1.1 200 OK\r\n";
-  response += "Content-Type: image/jpeg\r\n";
-  response += "Content-len: " + String(len) + "\r\n\r\n";
-  server.sendContent(response);
-  i = 0;
-  while ( len-- )
-  {
-    temp_last = temp;
-    temp =  SPI.transfer(0x00);
-    //Read JPEG data from FIFO
-    if ( (temp == 0xD9) && (temp_last == 0xFF) ) //If find the end ,break while,
-    {
-      buffer[i++] = temp;  //save the last  0XD9
-      //Write the remain bytes in the buffer
-      if (!client.connected()) break;
-      client.write(&buffer[0], i);
-       
-      is_header = false;
-      i = 0;
-      myCAM.CS_HIGH();
-      break;
-    }
-    if (is_header == true)
-    {
-      //Write image data to buffer if not full
-      if (i < bufferSize)
-        buffer[i++] = temp;
-      else
-      {
-        //Write bufferSize bytes image data to file
-        if (!client.connected()) break;
-        client.write(&buffer[0], bufferSize);
-        
-        i = 0;
-        buffer[i++] = temp;
-      }
-    }
-    else if ((temp == 0xD8) & (temp_last == 0xFF))
-    {
-      is_header = true;
-      buffer[i++] = temp_last;
-      buffer[i++] = temp;
-    }
-  }
+ 
 }
 
 void serverCapture() {
@@ -393,20 +309,5 @@ void handleRoot() {                         // When URI / is requested, send a w
 }
 
 void loop() {
-  //WiFiClient client = server.client();
   server.handleClient();
-
-
-//  client.println("<!DOCTYPE html><html>");
-//  client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
-//  client.println("<link rel=\"icon\" href=\"data:,\">");
-//  // CSS to style the on/off buttons 
-//  // Feel free to change the background-color and font-size attributes to fit your preferences
-//  client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}");
-//  client.println(".button { background-color: #195B6A; border: none; color: white; padding: 16px 40px;");
-//  client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
-//  client.println(".button2 {background-color: #77878A;}</style></head>");
-//  
-//  // Web Page Heading
-//  client.println("<body><h1>ESP8266 Web Server</h1>");
 }
