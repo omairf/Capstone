@@ -24,7 +24,7 @@ Features that were included in our system are:
 We built this system with both hardware and software.
 
 Hardware:
-- Aurdino Baord
+- Arduino Baord
 - PIR Motion Sensors
 - Bluetooth HC 06
 - Wires
@@ -33,6 +33,6 @@ Hardware:
 - Amazon Alexa
 
 Software:
-- Aurdino IDE
+- Arduino IDE
 - Android Studio
 - Firebase
