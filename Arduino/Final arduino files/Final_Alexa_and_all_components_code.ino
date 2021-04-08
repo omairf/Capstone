@@ -9,10 +9,11 @@
 #include <ESP8266WiFi.h>
 #include <fauxmoESP.h>
 
-#define FIREBASE_HOST "https://capstone-3c6f3.firebaseio.com/"
-#define FIREBASE_AUTH "XkWKa0Yu4XM5NvzEQYCna9pfDOgm95IXoH413Z63"
-const char* ssid = "BELL782"; // Your ssid
-const char* password = "9392112F"; // Your Password
+//enter your firebase host and auth keys
+#define FIREBASE_HOST ""
+#define FIREBASE_AUTH ""
+const char* ssid = ""; // Your ssid
+const char* password = ""; // Your Password
 
 FirebaseData firebaseData;
 FirebaseData getStatus;
@@ -55,20 +56,6 @@ void setup(){
   fauxmo.addDevice("Security System"); 
 }
 
-//void changeStatus(){
-//  Serial.println("BUTTON IS PRESSED");
-//    if(Firebase.getString(getStatus, "/System")){
-//      if(getStatus.stringData() == "Armed" && i == 1){
-//         Firebase.set(firebaseData, "/System", "Disarmed");
-//         i = 0;
-//      }
-//      else if(getStatus.stringData() == "Disarmed" && i == 2){
-//         Firebase.set(firebaseData, "/System", "Armed");
-//         i = 0;
-//      }
-//    }
-//}
-
 void loop(){
   fauxmo.handle();
   byte val = digitalRead(button);
@@ -84,8 +71,6 @@ void loop(){
     Serial.println("BUTTON IS PRESSED");
     Serial.println(i);
     Serial.println(j);
-
-    //if(Firebase.getString(getStatus, "/System")){
       if(j == 1 && i == 1){
          Firebase.set(firebaseData, "/System", "Disarmed");
          i = 0;
@@ -102,7 +87,6 @@ void loop(){
   long state = digitalRead(PIR);
   if(state == HIGH){
     digitalWrite(led, HIGH);
-    //Serial.println("Motion Detected");
     Firebase.set(firebaseData, "/Motion", "Detected");
      
     if(Firebase.getString(getStatus, "/System")){
@@ -129,13 +113,7 @@ void loop(){
     delay(100);
   }
   fauxmo.onSetState([](unsigned char device_id, const char * device_name, bool state, unsigned char value) {
-//    Serial.print("Device name:");
-//    Serial.println(device_name);
-//    // Here we handle the command received
-//    //changeStatus();
-//    Serial.println("Device ID: " + device_id);
     Serial.println("State " + state);
-//    Serial.println("Value " + value);
     if(state == 0){
       Serial.println("Turning off system");
       i = 1;
