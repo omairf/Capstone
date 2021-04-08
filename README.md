@@ -11,7 +11,7 @@ We aim to provide homeowners with a unique smart home security system to secure 
 
 ## Description
 
-Our Smart Home Security System had many features. <br>
+Our Smart Home Security System has many features. <br>
 
 Features that were included in our system are:
 
