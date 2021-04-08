@@ -11,6 +11,18 @@ We aim to provide homeowners with a unique smart home security system to secure 
 
 ## Description
 
-description
-...
-...
+Our Smart Home Security System had many features. We built this system with both hardware and software. <br>
+
+Hardware:
+-Aurdino Baord
+-PIR Motion Sensors
+-Bluetooth HC 06
+-Wires
+-Battery
+-Camera
+-Amazon Alexa
+
+Software:
+-Aurdino IDE
+-Android Studio
+-Firebase
