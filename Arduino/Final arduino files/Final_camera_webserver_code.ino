@@ -14,9 +14,7 @@
 #error Please select the ArduCAM ESP8266 UNO board in the Tools/Board
 #endif
 
-#if !(defined (OV2640_MINI_2MP)||defined (OV5640_MINI_5MP_PLUS) || defined (OV5642_MINI_5MP_PLUS) \
-    || defined (OV5642_MINI_5MP) || defined (OV5642_MINI_5MP_BIT_ROTATION_FIXED) \
-    ||(defined (ARDUCAM_SHIELD_V2) && (defined (OV2640_CAM) || defined (OV5640_CAM) || defined (OV5642_CAM))))
+#if !(defined (OV2640_MINI_2MP))
 #error Please select the hardware platform and camera module in the ../libraries/ArduCAM/memorysaver.h file
 #endif
 // set GPIO16 as the slave select :
@@ -43,10 +41,6 @@ ESP8266WebServer server(80);
 
 #if defined (OV2640_MINI_2MP) || defined (OV2640_CAM)
 ArduCAM myCAM(OV2640, CS);
-#elif defined (OV5640_MINI_5MP_PLUS) || defined (OV5640_CAM)
-ArduCAM myCAM(OV5640, CS);
-#elif defined (OV5642_MINI_5MP_PLUS) || defined (OV5642_MINI_5MP) || defined (OV5642_MINI_5MP_BIT_ROTATION_FIXED) ||(defined (OV5642_CAM))
-ArduCAM myCAM(OV5642, CS);
 #endif
 
 void start_capture() {
@@ -180,10 +174,6 @@ void handleNotFound() {
     int ql = server.arg("ql").toInt();
 #if defined (OV2640_MINI_2MP) || defined (OV2640_CAM)
     myCAM.OV2640_set_JPEG_size(ql);
-#elif defined (OV5640_MINI_5MP_PLUS) || defined (OV5640_CAM)
-    myCAM.OV5640_set_JPEG_size(ql);
-#elif defined (OV5642_MINI_5MP_PLUS) || defined (OV5642_MINI_5MP_BIT_ROTATION_FIXED) ||(defined (OV5642_CAM))
-    myCAM.OV5642_set_JPEG_size(ql);
 #endif
     delay(1000);
     Serial.println("QL change to: " + server.arg("ql"));
@@ -220,25 +210,6 @@ void setup() {
     Serial.println(F("Can't find OV2640 module!"));
   else
     Serial.println(F("OV2640 detected."));
-#elif defined (OV5640_MINI_5MP_PLUS) || defined (OV5640_CAM)
-  //Check if the camera module type is OV5640
-  myCAM.wrSensorReg16_8(0xff, 0x01);
-  myCAM.rdSensorReg16_8(OV5640_CHIPID_HIGH, &vid);
-  myCAM.rdSensorReg16_8(OV5640_CHIPID_LOW, &pid);
-  if ((vid != 0x56) || (pid != 0x40))
-    Serial.println(F("Can't find OV5640 module!"));
-  else
-    Serial.println(F("OV5640 detected."));
-#elif defined (OV5642_MINI_5MP_PLUS) || defined (OV5642_MINI_5MP) || defined (OV5642_MINI_5MP_BIT_ROTATION_FIXED) ||(defined (OV5642_CAM))
-  //Check if the camera module type is OV5642
-  myCAM.wrSensorReg16_8(0xff, 0x01);
-  myCAM.rdSensorReg16_8(OV5642_CHIPID_HIGH, &vid);
-  myCAM.rdSensorReg16_8(OV5642_CHIPID_LOW, &pid);
-  if ((vid != 0x56) || (pid != 0x42)) {
-    Serial.println(F("Can't find OV5642 module!"));
-  }
-  else
-    Serial.println(F("OV5642 detected."));
 #endif
 
 
@@ -247,12 +218,6 @@ void setup() {
   myCAM.InitCAM();
 #if defined (OV2640_MINI_2MP) || defined (OV2640_CAM)
   myCAM.OV2640_set_JPEG_size(OV2640_320x240);
-#elif defined (OV5640_MINI_5MP_PLUS) || defined (OV5640_CAM)
-  myCAM.write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK);   //VSYNC is active HIGH
-  myCAM.OV5640_set_JPEG_size(OV5640_320x240);
-#elif defined (OV5642_MINI_5MP_PLUS) || defined (OV5642_MINI_5MP) || defined (OV5642_MINI_5MP_BIT_ROTATION_FIXED) ||(defined (OV5642_CAM))
-  myCAM.write_reg(ARDUCHIP_TIM, VSYNC_LEVEL_MASK);   //VSYNC is active HIGH
-  myCAM.OV5640_set_JPEG_size(OV5642_320x240);
 #endif
 
   myCAM.clear_fifo_flag();
