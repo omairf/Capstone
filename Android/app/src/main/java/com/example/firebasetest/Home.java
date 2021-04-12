@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+//home page used to enter mac address for each user account
 public class Home extends AppCompatActivity {
 
     EditText m1, m2, m3, m4, m5, m6;

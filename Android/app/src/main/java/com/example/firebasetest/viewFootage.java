@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
+//class used to view footage list which simply retrieves a list of video files in the DCIM folder
 public class viewFootage extends AppCompatActivity {
 
     String pathOfVideo;
