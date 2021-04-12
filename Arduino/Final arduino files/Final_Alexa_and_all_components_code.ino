@@ -26,6 +26,7 @@ const int button = 16;
 int i = 0;
 int j = 0;
 
+//Used to setup IO pins, connect to wifi and Firebase, and add Alexa.
 void setup(){  
    
   pinMode(PIR,INPUT);
@@ -56,6 +57,7 @@ void setup(){
   fauxmo.addDevice("Security System"); 
 }
 
+//Handles the logic of hardware, updates Firebase, and handles Alexa integration.
 void loop(){
   fauxmo.handle();
   byte val = digitalRead(button);
@@ -81,7 +83,6 @@ void loop(){
          i = 0;
          j = 0;
       }
-    //}
   }
 
   long state = digitalRead(PIR);
@@ -108,7 +109,6 @@ void loop(){
     digitalWrite(buzzer,LOW);
     Firebase.set(firebaseData, "/Alarm", "Off");    
     digitalWrite(led, LOW);
-    //Serial.println("No Motion Detected");
     Firebase.set(firebaseData, "/Motion", "Not Detected");
     delay(100);
   }
