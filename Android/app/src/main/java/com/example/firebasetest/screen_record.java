@@ -38,7 +38,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+//class used to record screen
+//class allows users to view webserver stream from arduino esp8266 which has footage of arducam mini ov2640 2mp
 public class screen_record extends AppCompatActivity {
     private static final int REQUEST_CODE = 1000;
     private static final int REQUEST_PERMISSION = 1001;

@@ -23,6 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+//mainActivity class which displays 3 status updates directly pulled from the firebase database
+//3 status updates include activity of motion detector, buzzer (when ON indicated intruder is in home), and security system (armed/disarmed)
+//four buttons, 2 of which allow arm disarm of security system, once clicked they send firebase an update of system
+//1 button is used to view live video stream from arducam esp8266 webserver
+//and last button is used to view recording from live stream application
 public class MainActivity extends AppCompatActivity {
     EditText statusOfPIR, statusOfSystem, statusOfAlarm;
     Button arm, disarm, streamButton, start, stop;
@@ -121,14 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 String value = snapshot.getValue(String.class);
                 Toast.makeText(MainActivity.this, "Data Received: "+value, Toast.LENGTH_LONG).show();
                 statusOfAlarm.setText("Buzzer: "+value);
-//                if (value.equals("On")){
-//                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-//                    callIntent.setData(Uri.parse("tel:5555215556"));//change the number
-//                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
-//                        return;
-//                    }
-//                   startActivity(new Intent(MainActivity.this,buzzer_screen_record.class));
-//                }
             }
 
             @Override

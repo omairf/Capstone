@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
 
+//class used to register users into firebase authentication
 public class Register extends AppCompatActivity {
     EditText email, password, confirmPassword;
     Button register, login;

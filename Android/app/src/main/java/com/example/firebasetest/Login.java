@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+//class used to login and authenticate using firebase authentication
 public class Login extends AppCompatActivity {
     EditText email, password;
     Button login, register;
